@@ -88,15 +88,7 @@ img {
   text-align: center;
 }
 .section-title::after {
-  position: absolute;
-  content: "";
-  width: 64px;
-  height: 0.18rem;
-  left: 0;
-  right: 0;
-  margin: auto;
-  top: 2rem;
-  background-color: var(--first-color);
+  display: none; /* Remove the underline from section titles */
 }
 
 .section {
@@ -147,32 +139,35 @@ body {
     padding: 2rem;
     background-color: var(--primary-blue);
     transition: .5s;
+    white-space: nowrap; /* Prevent text wrapping */
   }
 }
 
 .nav__item {
   margin-bottom: var(--mb-4);
+  white-space: nowrap; /* Prevent text wrapping */
+  margin-right: 1.5rem; /* Add some space between items */
 }
 
 .nav__link {
   position: relative;
   color: var(--primary-blue);
   transition: color 0.3s ease;
+  text-decoration: none; /* Remove underline from all navigation links */
 }
 
 .nav__link:hover {
   color: var(--aqua-green);
-  text-decoration: none;
+  text-decoration: none; /* Ensure no underline on hover */
+}
+
+/* Remove the bottom border/underline effect */
+.nav__link::after {
+  display: none;
 }
 
 .nav__link:hover::after {
-  position: absolute;
-  content: '';
-  width: 100%;
-  height: 0.18rem;
-  left: 0;
-  top: 2rem;
-  background-color: var(--aqua-green);
+  display: none; /* Remove the hover underline effect */
 }
 
 .nav__logo {
@@ -193,13 +188,7 @@ body {
 }
 
 .active-link::after {
-  position: absolute;
-  content: '';
-  width: 100%;
-  height: 0.18rem;
-  left: 0;
-  top: 2rem;
-  background-color: var(--aqua-green);
+  display: none; /* Remove underline from active link */
 }
 
 /*=== Show menu ===*/
@@ -652,11 +641,20 @@ body {
 }
 
 .work__container {
-  row-gap: 3rem;
-  position: relative;
-  padding-left: 2.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding: 0 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .work__container {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 0;
+  }
 }
 
 .work__container::before {
@@ -675,19 +673,29 @@ body {
 }
 
 .work__experience {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 1rem;
-  padding: 2.5rem;
-  box-shadow: 0 15px 35px -10px rgba(2, 12, 27, 0.1);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 15px -5px rgba(2, 12, 27, 0.1);
+  transition: all 0.3s ease;
   position: relative;
-  border-left: 4px solid var(--primary-blue);
-  margin-bottom: 3rem;
-  opacity: 0;
-  transform: translateY(30px) scale(0.98);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
   overflow: hidden;
+  border-left: 3px solid var(--primary-blue);
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+  margin: 0.5rem 0;
+}
+
+@media screen and (min-width: 768px) {
+  .work__experience {
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.1);
+    transform: translateY(20px);
+    margin: 0;
+    border-left-width: 4px;
+  }
 }
 
 .work__experience::before {
@@ -785,7 +793,7 @@ body {
 
 .work__experience h3 {
   color: var(--primary-blue);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin-bottom: 0.5rem;
   font-weight: 700;
   position: relative;
@@ -795,6 +803,14 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: all 0.3s ease;
+  line-height: 1.4;
+}
+
+@media screen and (min-width: 768px) {
+  .work__experience h3 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
 }
 
 .work__experience:hover h3 {
@@ -1283,16 +1299,14 @@ body {
   .section-title {
     margin-bottom: var(--mb-6);
   }
-  .section-title::after {
-    width: 80px;
-    top: 3rem;
-  }
   .nav {
     height: calc(var(--header-height) + 1.5rem);
   }
   .nav__list {
     display: flex;
-    padding-top: 0;
+    flex-direction: row;
+    flex-wrap: nowrap; /* Prevent wrapping in desktop view */
+    align-items: center;
   }
   .nav__item {
     margin-left: var(--mb-6);
